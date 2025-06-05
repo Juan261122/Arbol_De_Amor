@@ -70,7 +70,7 @@ function getURLParam(name) {
 function showDedicationText() { //seguidores
   let text = getURLParam('text');
   if (!text) {
-    text = `Para el amor de mi vida:\n\nDesde el primer momento supe que eras tú. Tu sonrisa, tu voz, tu forma de ser… todo en ti me hace sentir en casa.\n\nGracias por acompañarme en cada paso, por entenderme incluso en silencio, y por llenar mis días de amor.\n\nTe amo más de lo que las palabras pueden expresar.\n\nHoy, quiero dar un paso más y preguntarte: ¿Quieres ser mi novia? Si tu corazón dice que sí, este reloj comenzará a marcar el inicio de nuestra hermosa historia y el camino hacia una vida juntos.`;  } else {
+    text = `Para el amor de mi vida:\n\nDesde el primer momento supe que eras tú. Tu sonrisa, tu voz, tu forma de ser… todo en ti me hace sentir en casa.\n\nGracias por acompañarme en cada paso, por entenderme incluso en silencio, y por llenar mis días de amor.\n\nTe amo más de lo que las palabras pueden expresar.\n\nHoy, quiero dar un paso más y preguntarte: ¿Aceptarias ser mi novia? Si tu corazón dice que sí, este reloj comenzará a marcar el inicio de nuestra hermosa historia y el camino hacia una vida juntos.`;  } else {
     text = decodeURIComponent(text).replace(/\\n/g, '\n');
   }
   const container = document.getElementById('dedication-text');
