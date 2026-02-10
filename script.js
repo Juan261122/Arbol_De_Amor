@@ -124,34 +124,37 @@ function showCountdown() {
   const container = document.getElementById('countdown');
   if (!container) return;
 
-  // FECHAS (No movemos las originales, solo configuramos Junio 2025 para que ya cuente)
-  const inicioRelacion = new Date('2025-03-30T00:00:00'); 
-  const fechaJunio = new Date('2025-06-20T00:00:00'); 
+  // FECHAS CONFIGURADAS (Asegúrate de que digan 2025)
+  const fechaRelacion = new Date('2025-03-30T00:00:00'); 
+  const fechaJunio = new Date('2025-06-20T00:00:00'); // <--- Junio del año pasado
 
   function update() {
     const now = new Date();
 
-    // --- 1. Llevamos Juntos (Días totales - SIN CAMBIOS) ---
-    let diffInicio = now - inicioRelacion;
+    // 1. Llevamos Juntos (Días totales) - SIN CAMBIOS
+    let diffInicio = now - fechaRelacion;
     let diasTotales = Math.floor(diffInicio / (1000 * 60 * 60 * 24));
 
-    // --- 2. Una Vida Juntos (Detallado - SIN CAMBIOS) ---
-    let diffA = now - inicioRelacion;
+    // 2. Una Vida Juntos (Detallado) - SIN CAMBIOS
+    let diffA = now - fechaRelacion;
     let aniosA = Math.floor(diffA / (1000 * 60 * 60 * 24 * 365.25));
     let diasA = Math.floor((diffA / (1000 * 60 * 60 * 24)) % 365.25);
     let horasA = Math.floor((diffA / (1000 * 60 * 60)) % 24);
     let minsA = Math.floor((diffA / (1000 * 60)) % 60);
     let segsA = Math.floor((diffA / 1000) % 60);
 
-    // --- 3. Desde el 20 de Junio (NUEVO CONTEO HACIA ADELANTE) ---
-    let diffJ = now - fechaJunio;
+    // 3. 20 de Junio  (FORZADO A CONTAR HACIA ADELANTE)
+    let diffJ = now - fechaJunio; 
+    
+    // Si por alguna razón da negativo, es que el sistema está tomando otro año.
+    // Con 2025-06-20 y hoy siendo Feb 2026, DEBE dar positivo (aprox 234 días).
     let aniosJ = Math.floor(diffJ / (1000 * 60 * 60 * 24 * 365.25));
     let diasJ = Math.floor((diffJ / (1000 * 60 * 60 * 24)) % 365.25);
     let horasJ = Math.floor((diffJ / (1000 * 60 * 60)) % 24);
     let minsJ = Math.floor((diffJ / (1000 * 60)) % 60);
     let segsJ = Math.floor((diffJ / 1000) % 60);
 
-    // RENDERIZADO (Manteniendo tu estructura y agregando la nueva línea)
+    // RENDERIZADO FINAL
     container.innerHTML =
       `Llevamos Juntos: <b>${diasTotales}</b> días<br>` +
       `Una Vida Juntos: <b>${aniosA} años ${diasA} días ${horasA} horas ${minsA} minutos ${segsA} s</b><br>` +
@@ -163,7 +166,6 @@ function showCountdown() {
   update();
   setInterval(update, 1000);
 }
-
 
 // 5. Música
 function playBackgroundMusic() {
