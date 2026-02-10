@@ -126,7 +126,7 @@ function showCountdown() {
 
   // FECHAS (30 de Marzo y 20 de Junio de 2025)
   const fechaRelacion = new Date('2025-03-30T00:00:00'); 
-  const fechaNoviazgoFormal = new Date('2025-06-20T00:00:00'); 
+  const fechaNovios = new Date('2025-06-20T00:00:00'); 
 
   function update() {
     const now = new Date();
@@ -135,7 +135,7 @@ function showCountdown() {
     let diffTotal = now - fechaRelacion;
     let diasTotales = Math.floor(diffTotal / (1000 * 60 * 60 * 24));
 
-    // 2. Una Vida Juntos (Detalle desde el 30 de marzo)
+    // 2. Una Vida Juntos (Abreviado para que quepa bien)
     let diffA = now - fechaRelacion;
     let aniosA = Math.floor(diffA / (1000 * 60 * 60 * 24 * 365.25));
     let diasA = Math.floor((diffA / (1000 * 60 * 60 * 24)) % 365.25);
@@ -143,19 +143,19 @@ function showCountdown() {
     let minsA = Math.floor((diffA / (1000 * 60)) % 60);
     let segsA = Math.floor((diffA / 1000) % 60);
 
-    // 3. LA FRASE QUE ELEGISTE (20 de Junio)
-    let diffJ = now - fechaNoviazgoFormal;
+    // 3. OPCIÓN 1: Nuestro 'Sí' formal (Junio)
+    let diffJ = now - fechaNovios;
     let aniosJ = Math.floor(diffJ / (1000 * 60 * 60 * 24 * 365.25));
     let diasJ = Math.floor((diffJ / (1000 * 60 * 60 * 24)) % 365.25);
     let horasJ = Math.floor((diffJ / (1000 * 60 * 60)) % 24);
     let minsJ = Math.floor((diffJ / (1000 * 60)) % 60);
     let segsJ = Math.floor((diffJ / 1000) % 60);
 
-    // RENDERIZADO CON TU FRASE ESPECIAL
+    // RENDERIZADO FINAL LIMPIO
     container.innerHTML =
       `Llevamos Juntos: <b>${diasTotales}</b> días<br>` +
-      `Una Vida Juntos: <b>${aniosA} años ${diasA} días ${horasA}h ${minsA}m ${segsA}s</b><br>` +
-      `Desde que nuestras almas decidieron caminar de la mano formalmente: <b>${aniosJ} años ${diasJ} días ${horasJ}h ${minsJ}m ${segsJ}s</b>`;
+      `Una Vida Juntos: <b>${aniosA}a ${diasA}d ${horasA}h ${minsA}m ${segsA}s</b><br>` +
+      `Nuestro 'Sí' formal: <b>${aniosJ}a ${diasJ}d ${horasJ}h ${minsJ}m ${segsJ}s</b>`;
     
     container.classList.add('visible');
   }
@@ -163,6 +163,7 @@ function showCountdown() {
   update();
   setInterval(update, 1000);
 }
+
 
 // 5. Música
 function playBackgroundMusic() {
