@@ -112,8 +112,8 @@ function showCountdown() {
   const container = document.getElementById('countdown');
   
   // FECHAS CONFIGURADAS
-  const inicioRelacion = new Date('2024-03-30T00:00:00'); // Inicio total
-  const primerAniversario = new Date('2025-03-30T00:00:00'); // El "clic" del año
+  const inicioRelacion = new Date('2025-03-30T00:00:00'); // Inicio total
+  const primerAniversario = new Date('2026-03-30T00:00:00'); // El "clic" del año
   const fechaJunio = new Date('2026-06-20T00:00:00'); // Tu fecha adicional
 
   function update() {
@@ -161,6 +161,7 @@ function showCountdown() {
   update();
   setInterval(update, 1000);
 }
+
 
 // Cuenta regresiva o fecha especial
 function showCountdown() {
