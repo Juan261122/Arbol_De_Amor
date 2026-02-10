@@ -1,5 +1,4 @@
-//© Zero - Código libre no comercial
-
+// © Zero - Código libre no comercial
 
 // Cargar el SVG y animar los corazones
 fetch('treelove.svg')
@@ -10,7 +9,6 @@ fetch('treelove.svg')
     const svg = container.querySelector('svg');
     if (!svg) return;
 
-    // Animación de "dibujo" para todos los paths
     const allPaths = Array.from(svg.querySelectorAll('path'));
     allPaths.forEach(path => {
       path.style.stroke = '#222';
@@ -22,7 +20,6 @@ fetch('treelove.svg')
       path.style.transition = 'none';
     });
 
-    // Forzar reflow y luego animar
     setTimeout(() => {
       allPaths.forEach((path, i) => {
         path.style.transition = `stroke-dashoffset 1.2s cubic-bezier(.77,0,.18,1) ${i * 0.08}s, fill-opacity 0.5s ${0.9 + i * 0.08}s`;
@@ -34,24 +31,18 @@ fetch('treelove.svg')
         }, 1200 + i * 80);
       });
 
-      // Después de la animación de dibujo, mueve y agranda el SVG
       const totalDuration = 1200 + (allPaths.length - 1) * 80 + 500;
       setTimeout(() => {
         svg.classList.add('move-and-scale');
-        // Mostrar texto con efecto typing
         setTimeout(() => {
           showDedicationText();
-          // Mostrar petalos flotando
           startFloatingObjects();
-          // Mostrar cuenta regresiva
-          showCountdown();
-          // Iniciar música de fondo
+          showCountdown(); // Inicia el contador con la nueva lógica
           playBackgroundMusic();
-        }, 1200); //Tiempo para agrandar el SVG
+        }, 1200); 
       }, totalDuration);
     }, 50);
 
-    // Selecciona los corazones (formas rojas)
     const heartPaths = allPaths.filter(el => {
       const style = el.getAttribute('style') || '';
       return style.includes('#FC6F58') || style.includes('#C1321F');
@@ -61,13 +52,12 @@ fetch('treelove.svg')
     });
   });
 
-// Efecto máquina de escribir para el texto de dedicatoria (seguidores)
 function getURLParam(name) {
   const url = new URL(window.location.href);
   return url.searchParams.get(name);
 }
 
-function showDedicationText() { //seguidores
+function showDedicationText() {
   let text = getURLParam('text');
   if (!text) {
     text = `Para el amor de mi vida:\n\nDesde el primer momento supe que eras tú. Tu sonrisa, tu voz, tu forma de ser… todo en ti me hace sentir en casa.\n\nGracias por acompañarme en cada paso, por entenderme incluso en silencio, y por llenar mis días de amor.\n\nTe amo más de lo que las palabras pueden expresar.\n\nHoy, quiero dar un paso más y preguntarte: ¿Aceptarias ser mi novia? Si tu corazón dice que sí, este reloj comenzará a marcar el inicio de nuestra hermosa historia y el camino hacia una vida juntos.`;  } else {
@@ -82,16 +72,13 @@ function showDedicationText() { //seguidores
       i++;
       setTimeout(type, text[i - 2] === '\n' ? 350 : 45);
     } else {
-      // Al terminar el typing, mostrar la firma animada
       setTimeout(showSignature, 600);
     }
   }
   type();
 }
 
-// Firma manuscrita animada
 function showSignature() {
-  // Cambia para buscar la firma dentro del contenedor de dedicatoria
   const dedication = document.getElementById('dedication-text');
   let signature = dedication.querySelector('#signature');
   if (!signature) {
@@ -105,22 +92,17 @@ function showSignature() {
   signature.classList.add('visible');
 }
 
-
-
-// Controlador de objetos flotantes
 function startFloatingObjects() {
   const container = document.getElementById('floating-objects');
   let count = 0;
   function spawn() {
     let el = document.createElement('div');
     el.className = 'floating-petal';
-    // Posición inicial
     el.style.left = `${Math.random() * 90 + 2}%`;
     el.style.top = `${100 + Math.random() * 10}%`;
     el.style.opacity = 0.7 + Math.random() * 0.3;
     container.appendChild(el);
 
-    // Animación flotante
     const duration = 6000 + Math.random() * 4000;
     const drift = (Math.random() - 0.5) * 60;
     setTimeout(() => {
@@ -129,46 +111,68 @@ function startFloatingObjects() {
       el.style.opacity = 0.2;
     }, 30);
 
-    // Eliminar después de animar
     setTimeout(() => {
       if (el.parentNode) el.parentNode.removeChild(el);
     }, duration + 2000);
 
-    // Generar más objetos
     if (count++ < 32) setTimeout(spawn, 350 + Math.random() * 500);
     else setTimeout(spawn, 1200 + Math.random() * 1200);
   }
   spawn();
 }
 
-// Cuenta regresiva o fecha especial
+// --- ESTA ES LA FUNCIÓN MODIFICADA QUE QUERÍAS ---
 function showCountdown() {
   const container = document.getElementById('countdown');
-  let startParam = getURLParam('start');
-  let eventParam = getURLParam('event');
-  let startDate = startParam ? new Date(startParam + 'T00:00:00') : new Date('2025-03-30T00:00:00'); 
-  let eventDate = eventParam ? new Date(eventParam + 'T00:00:00') : new Date('2026-03-30T00:00:00');
+  if (!container) return;
+
+  // FECHAS BASE
+  const inicioRelacion = new Date('2025-03-30T00:00:00'); 
+  const fechaAniversario = new Date('2026-03-30T00:00:00');
+  const fechaJunio = new Date('2026-06-20T00:00:00');
 
   function update() {
     const now = new Date();
-    let diff = now - startDate;
-    let days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    let eventDiff = eventDate - now;
-    let eventDays = Math.max(0, Math.floor(eventDiff / (1000 * 60 * 60 * 24)));
-    let eventHours = Math.max(0, Math.floor((eventDiff / (1000 * 60 * 60)) % 24));
-    let eventMinutes = Math.max(0, Math.floor((eventDiff / (1000 * 60)) % 60));
-    let eventSeconds = Math.max(0, Math.floor((eventDiff / 1000) % 60));
 
+    // 1. Llevamos Juntos (Días totales)
+    let diffInicio = now - inicioRelacion;
+    let diasTotales = Math.floor(diffInicio / (1000 * 60 * 60 * 24));
+
+    // 2. Una Vida Juntos (A partir del 30 de marzo 2026)
+    let vidaJuntosTexto = "0d 0h 0m 0s";
+    if (now >= fechaAniversario) {
+      let diffA = now - fechaAniversario;
+      let dA = Math.floor(diffA / (1000 * 60 * 60 * 24));
+      let hA = Math.floor((diffA / (1000 * 60 * 60)) % 24);
+      let mA = Math.floor((diffA / (1000 * 60)) % 60);
+      let sA = Math.floor((diffA / 1000) % 60);
+      vidaJuntosTexto = `1 año, ${dA}d ${hA}h ${mA}m ${sA}s`;
+    }
+
+    // 3. Desde el 20 de Junio (A partir del 20 de junio 2026)
+    let junioTexto = "0 años, 0d 0h 0m 0s";
+    if (now >= fechaJunio) {
+      let diffJ = now - fechaJunio;
+      let dJ = Math.floor(diffJ / (1000 * 60 * 60 * 24));
+      let hJ = Math.floor((diffJ / (1000 * 60 * 60)) % 24);
+      let mJ = Math.floor((diffJ / (1000 * 60)) % 60);
+      let sJ = Math.floor((diffJ / 1000) % 60);
+      junioTexto = `0 años, ${dJ}d ${hJ}h ${mJ}m ${sJ}s`;
+    }
+
+    // Renderizado idéntico a tu diseño original
     container.innerHTML =
-      `Llevamos Juntos: <b>${days}</b> días<br>` +
-      `Una Vida Juntos: <b>${eventDays}d ${eventHours}h ${eventMinutes}m ${eventSeconds}s</b>`;
+      `Llevamos Juntos: <b>${diasTotales}</b> días<br>` +
+      `Una Vida Juntos: <b>${vidaJuntosTexto}</b><br>` +
+      `Desde el 20 de Junio: <b>${junioTexto}</b>`;
+    
     container.classList.add('visible');
   }
+
   update();
   setInterval(update, 1000);
 }
 
-// --- Música de fondo ---
 function playBackgroundMusic() {
   const audio = document.getElementById('bg-music');
   if (!audio) return;
@@ -177,39 +181,14 @@ function playBackgroundMusic() {
     btn = document.createElement('button');
     btn.id = 'music-btn';
     btn.textContent = '🔊 Música';
-    btn.style.position = 'fixed';
-    btn.style.bottom = '18px';
-    btn.style.right = '18px';
-    btn.style.zIndex = 99;
-    btn.style.background = 'rgba(255,255,255,0.85)';
-    btn.style.border = 'none';
-    btn.style.borderRadius = '24px';
-    btn.style.padding = '10px 18px';
-    btn.style.fontSize = '1.1em';
-    btn.style.cursor = 'pointer';
+    btn.className = 'music-button-style'; // Puedes darle estilo en CSS
     document.body.appendChild(btn);
   }
   audio.volume = 0.7;
   audio.loop = true;
-  // Intentar reproducir inmediatamente
-  audio.play().then(() => {
-    btn.textContent = '🔊 Música';
-  }).catch(() => {
-    // Si falla el autoplay, esperar click en el botón
-    btn.textContent = '▶️ Música';
-  });
+  audio.play().catch(() => { btn.textContent = '▶️ Música'; });
   btn.onclick = () => {
-    if (audio.paused) {
-      audio.play();
-      btn.textContent = '🔊 Música';
-    } else {
-      audio.pause();
-      btn.textContent = '🔈 Música';
-    }
+    if (audio.paused) { audio.play(); btn.textContent = '🔊 Música'; }
+    else { audio.pause(); btn.textContent = '🔈 Música'; }
   };
 }
-
-// Intentar reproducir la música lo antes posible (al cargar la página)
-window.addEventListener('DOMContentLoaded', () => {
-  playBackgroundMusic();
-});
