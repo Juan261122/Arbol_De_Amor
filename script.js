@@ -111,49 +111,51 @@ function showSignature() {
 function showCountdown() {
   const container = document.getElementById('countdown');
   
-  // FECHAS CONFIGURADAS
-  const inicioRelacion = new Date('2025-03-30T00:00:00'); // Inicio total
-  const primerAniversario = new Date('2026-03-30T00:00:00'); // El "clic" del año
-  const fechaJunio = new Date('2026-06-20T00:00:00'); // Tu fecha adicional
+  // FECHAS DE INICIO
+  const inicioRelacion = new Date('2025-03-30T00:00:00'); 
+  const fechaAniversario = new Date('2026-03-30T00:00:00');
+  const fechaJunio = new Date('2026-06-20T00:00:00');
 
   function update() {
     const now = new Date();
 
-    // 1. Días totales desde que se conocieron (siempre suma)
-    let diffTotal = now - inicioRelacion;
-    let diasTotales = Math.floor(diffTotal / (1000 * 60 * 60 * 24));
+    // 1. Llevamos Juntos (Contador simple de días totales como al inicio)
+    let diffInicio = now - inicioRelacion;
+    let diasTotales = Math.floor(diffInicio / (1000 * 60 * 60 * 24));
 
-    // 2. Lógica de "Una Vida Juntos" (A partir del 30 de Marzo 2026)
+    // 2. Una Vida Juntos (Detallado a partir del 30 de Marzo 2026)
     let vidaJuntosHTML = "";
-    if (now < primerAniversario) {
-      // Si aún no es 30 de marzo 2026, mostramos cuenta regresiva para el aniversario
-      let diffFalta = primerAniversario - now;
-      let d = Math.floor(diffFalta / (1000 * 60 * 60 * 24));
-      vidaJuntosHTML = `Una Vida Juntos: <b>Faltan ${d} días para el 1er Año</b>`;
+    if (now >= fechaAniversario) {
+      let diffAniv = now - fechaAniversario;
+      let dias = Math.floor(diffAniv / (1000 * 60 * 60 * 24));
+      let horas = Math.floor((diffAniv / (1000 * 60 * 60)) % 24);
+      let mins = Math.floor((diffAniv / (1000 * 60)) % 60);
+      let segs = Math.floor((diffAniv / 1000) % 60);
+      // "1 año" porque ya se cumplió la fecha de aniversario
+      vidaJuntosHTML = `Una Vida Juntos: <b>1 año, ${dias}d ${horas}h ${mins}m ${segs}s</b><br>`;
     } else {
-      // SI YA ES 30 DE MARZO 2026 O DESPUÉS:
-      let diffDesdeAniversario = now - primerAniversario;
-      
-      // Cálculo de años, días, horas, min, seg
-      let anios = 1; // Ya pasó el primer año
-      let dias = Math.floor(diffDesdeAniversario / (1000 * 60 * 60 * 24));
-      let horas = Math.floor((diffDesdeAniversario / (1000 * 60 * 60)) % 24);
-      let mins = Math.floor((diffDesdeAniversario / (1000 * 60)) % 60);
-      let segs = Math.floor((diffDesdeAniversario / 1000) % 60);
-
-      vidaJuntosHTML = `Una Vida Juntos: <b>${anios} año, ${dias}d ${horas}h ${mins}m ${segs}s</b>`;
+      vidaJuntosHTML = `Una Vida Juntos: <b>0 años, 0d 0h 0m 0s</b><br>`;
     }
 
-    // 3. Cuenta para el 20 de Junio
-    let diffJunio = fechaJunio - now;
-    let jDias = Math.max(0, Math.floor(diffJunio / (1000 * 60 * 60 * 24)));
-    let jHoras = Math.max(0, Math.floor((diffJunio / (1000 * 60 * 60)) % 24));
+    // 3. Contador 20 de Junio (Detallado a partir de esa fecha)
+    let junioHTML = "";
+    if (now >= fechaJunio) {
+      let diffJun = now - fechaJunio;
+      let diasJ = Math.floor(diffJun / (1000 * 60 * 60 * 24));
+      let horasJ = Math.floor((diffJun / (1000 * 60 * 60)) % 24);
+      let minsJ = Math.floor((diffJun / (1000 * 60)) % 60);
+      let segsJ = Math.floor((diffJun / 1000) % 60);
+      junioHTML = `Desde el 20 de Junio: <b>0 años, ${diasJ}d ${horasJ}h ${minsJ}m ${segsJ}s</b>`;
+    } else {
+      // Mientras no llegue la fecha, se puede mostrar en 0 o una cuenta regresiva
+      junioHTML = `Desde el 20 de Junio: <b>0 años, 0d 0h 0m 0s</b>`;
+    }
 
-    // Mostrar todo en el contenedor
-    container.innerHTML = 
-      `Llevamos Juntos: <b>${diasTotales} días</b><br>` +
-      `${vidaJuntosHTML}<br>` +
-      `<small style="color: #C1321F;">Meta 20 de Junio: ${jDias}d ${jHoras}h restantes</small>`;
+    // Renderizado final conservando tu estilo
+    container.innerHTML =
+      `Llevamos Juntos: <b>${diasTotales}</b> días<br>` +
+      vidaJuntosHTML +
+      junioHTML;
     
     container.classList.add('visible');
   }
