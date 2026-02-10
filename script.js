@@ -124,18 +124,18 @@ function showCountdown() {
   const container = document.getElementById('countdown');
   if (!container) return;
 
-  // FECHAS CONFIGURADAS (Asegúrate de que digan 2025)
+  // FECHAS (30 de Marzo y 20 de Junio de 2025)
   const fechaRelacion = new Date('2025-03-30T00:00:00'); 
-  const fechaJunio = new Date('2025-06-20T00:00:00'); // <--- Junio del año pasado
+  const fechaNoviazgoFormal = new Date('2025-06-20T00:00:00'); 
 
   function update() {
     const now = new Date();
 
-    // 1. Llevamos Juntos (Días totales) - SIN CAMBIOS
-    let diffInicio = now - fechaRelacion;
-    let diasTotales = Math.floor(diffInicio / (1000 * 60 * 60 * 24));
+    // 1. Llevamos Juntos (Días totales)
+    let diffTotal = now - fechaRelacion;
+    let diasTotales = Math.floor(diffTotal / (1000 * 60 * 60 * 24));
 
-    // 2. Una Vida Juntos (Detallado) - SIN CAMBIOS
+    // 2. Una Vida Juntos (Detalle desde el 30 de marzo)
     let diffA = now - fechaRelacion;
     let aniosA = Math.floor(diffA / (1000 * 60 * 60 * 24 * 365.25));
     let diasA = Math.floor((diffA / (1000 * 60 * 60 * 24)) % 365.25);
@@ -143,22 +143,19 @@ function showCountdown() {
     let minsA = Math.floor((diffA / (1000 * 60)) % 60);
     let segsA = Math.floor((diffA / 1000) % 60);
 
-    // 3. 20 de Junio  (FORZADO A CONTAR HACIA ADELANTE)
-    let diffJ = now - fechaJunio; 
-    
-    // Si por alguna razón da negativo, es que el sistema está tomando otro año.
-    // Con 2025-06-20 y hoy siendo Feb 2026, DEBE dar positivo (aprox 234 días).
+    // 3. LA FRASE QUE ELEGISTE (20 de Junio)
+    let diffJ = now - fechaNoviazgoFormal;
     let aniosJ = Math.floor(diffJ / (1000 * 60 * 60 * 24 * 365.25));
     let diasJ = Math.floor((diffJ / (1000 * 60 * 60 * 24)) % 365.25);
     let horasJ = Math.floor((diffJ / (1000 * 60 * 60)) % 24);
     let minsJ = Math.floor((diffJ / (1000 * 60)) % 60);
     let segsJ = Math.floor((diffJ / 1000) % 60);
 
-    // RENDERIZADO FINAL
+    // RENDERIZADO CON TU FRASE ESPECIAL
     container.innerHTML =
       `Llevamos Juntos: <b>${diasTotales}</b> días<br>` +
-      `Una Vida Juntos: <b>${aniosA} años ${diasA} días ${horasA} horas ${minsA} minutos ${segsA} s</b><br>` +
-      `Desde que nuestras almas decidieron caminar de la mano formalmente <b>${aniosJ} años ${diasJ} días ${horasJ} horas ${minsJ} minutos ${segsJ} s</b>`;
+      `Una Vida Juntos: <b>${aniosA} años ${diasA} días ${horasA}h ${minsA}m ${segsA}s</b><br>` +
+      `Desde que nuestras almas decidieron caminar de la mano formalmente: <b>${aniosJ} años ${diasJ} días ${horasJ}h ${minsJ}m ${segsJ}s</b>`;
     
     container.classList.add('visible');
   }
