@@ -158,7 +158,7 @@ function showCountdown() {
     container.innerHTML =
       `Llevamos Juntos: <b>${diasTotales}</b> días<br>` +
       `Una Vida Juntos: <b>${aniosA} años ${diasA} días ${horasA} horas ${minsA} minutos ${segsA} s</b><br>` +
-      `Desde el 20 de Junio: <b>${aniosJ} años ${diasJ} días ${horasJ} horas ${minsJ} minutos ${segsJ} s</b>`;
+      `Desde que nuestras almas decidieron caminar de la mano formalmente <b>${aniosJ} años ${diasJ} días ${horasJ} horas ${minsJ} minutos ${segsJ} s</b>`;
     
     container.classList.add('visible');
   }
