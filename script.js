@@ -108,62 +108,38 @@ function showSignature() {
 
 
 // Controlador de objetos flotantes
-function showCountdown() {
-  const container = document.getElementById('countdown');
-  
-  // FECHAS DE INICIO
-  const inicioRelacion = new Date('2025-03-30T00:00:00'); 
-  const fechaAniversario = new Date('2026-03-30T00:00:00');
-  const fechaJunio = new Date('2026-06-20T00:00:00');
+function startFloatingObjects() {
+  const container = document.getElementById('floating-objects');
+  let count = 0;
+  function spawn() {
+    let el = document.createElement('div');
+    el.className = 'floating-petal';
+    // Posición inicial
+    el.style.left = `${Math.random() * 90 + 2}%`;
+    el.style.top = `${100 + Math.random() * 10}%`;
+    el.style.opacity = 0.7 + Math.random() * 0.3;
+    container.appendChild(el);
 
-  function update() {
-    const now = new Date();
+    // Animación flotante
+    const duration = 6000 + Math.random() * 4000;
+    const drift = (Math.random() - 0.5) * 60;
+    setTimeout(() => {
+      el.style.transition = `transform ${duration}ms linear, opacity 1.2s`;
+      el.style.transform = `translate(${drift}px, -110vh) scale(${0.8 + Math.random() * 0.6}) rotate(${Math.random() * 360}deg)`;
+      el.style.opacity = 0.2;
+    }, 30);
 
-    // 1. Llevamos Juntos (Contador simple de días totales como al inicio)
-    let diffInicio = now - inicioRelacion;
-    let diasTotales = Math.floor(diffInicio / (1000 * 60 * 60 * 24));
+    // Eliminar después de animar
+    setTimeout(() => {
+      if (el.parentNode) el.parentNode.removeChild(el);
+    }, duration + 2000);
 
-    // 2. Una Vida Juntos (Detallado a partir del 30 de Marzo 2026)
-    let vidaJuntosHTML = "";
-    if (now >= fechaAniversario) {
-      let diffAniv = now - fechaAniversario;
-      let dias = Math.floor(diffAniv / (1000 * 60 * 60 * 24));
-      let horas = Math.floor((diffAniv / (1000 * 60 * 60)) % 24);
-      let mins = Math.floor((diffAniv / (1000 * 60)) % 60);
-      let segs = Math.floor((diffAniv / 1000) % 60);
-      // "1 año" porque ya se cumplió la fecha de aniversario
-      vidaJuntosHTML = `Una Vida Juntos: <b>1 año, ${dias}d ${horas}h ${mins}m ${segs}s</b><br>`;
-    } else {
-      vidaJuntosHTML = `Una Vida Juntos: <b>0 años, 0d 0h 0m 0s</b><br>`;
-    }
-
-    // 3. Contador 20 de Junio (Detallado a partir de esa fecha)
-    let junioHTML = "";
-    if (now >= fechaJunio) {
-      let diffJun = now - fechaJunio;
-      let diasJ = Math.floor(diffJun / (1000 * 60 * 60 * 24));
-      let horasJ = Math.floor((diffJun / (1000 * 60 * 60)) % 24);
-      let minsJ = Math.floor((diffJun / (1000 * 60)) % 60);
-      let segsJ = Math.floor((diffJun / 1000) % 60);
-      junioHTML = `Desde el 20 de Junio: <b>0 años, ${diasJ}d ${horasJ}h ${minsJ}m ${segsJ}s</b>`;
-    } else {
-      // Mientras no llegue la fecha, se puede mostrar en 0 o una cuenta regresiva
-      junioHTML = `Desde el 20 de Junio: <b>0 años, 0d 0h 0m 0s</b>`;
-    }
-
-    // Renderizado final conservando tu estilo
-    container.innerHTML =
-      `Llevamos Juntos: <b>${diasTotales}</b> días<br>` +
-      vidaJuntosHTML +
-      junioHTML;
-    
-    container.classList.add('visible');
+    // Generar más objetos
+    if (count++ < 32) setTimeout(spawn, 350 + Math.random() * 500);
+    else setTimeout(spawn, 1200 + Math.random() * 1200);
   }
-
-  update();
-  setInterval(update, 1000);
+  spawn();
 }
-
 
 // Cuenta regresiva o fecha especial
 function showCountdown() {
