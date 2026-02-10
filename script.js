@@ -124,18 +124,18 @@ function showCountdown() {
   const container = document.getElementById('countdown');
   if (!container) return;
 
-  // FECHAS (30 de Marzo y 20 de Junio de 2025)
+  // FECHAS (Marzo y Junio 2025 para que ya cuenten)
   const fechaRelacion = new Date('2025-03-30T00:00:00'); 
   const fechaNovios = new Date('2025-06-20T00:00:00'); 
 
   function update() {
     const now = new Date();
 
-    // 1. Llevamos Juntos (Días totales)
+    // 1. Llevamos Juntos
     let diffTotal = now - fechaRelacion;
     let diasTotales = Math.floor(diffTotal / (1000 * 60 * 60 * 24));
 
-    // 2. Una Vida Juntos (Abreviado para que quepa bien)
+    // 2. Una Vida Juntos
     let diffA = now - fechaRelacion;
     let aniosA = Math.floor(diffA / (1000 * 60 * 60 * 24 * 365.25));
     let diasA = Math.floor((diffA / (1000 * 60 * 60 * 24)) % 365.25);
@@ -143,7 +143,7 @@ function showCountdown() {
     let minsA = Math.floor((diffA / (1000 * 60)) % 60);
     let segsA = Math.floor((diffA / 1000) % 60);
 
-    // 3. OPCIÓN 1: Nuestro 'Sí' formal (Junio)
+    // 3. NUEVA FRASE CORTA (Opción 1)
     let diffJ = now - fechaNovios;
     let aniosJ = Math.floor(diffJ / (1000 * 60 * 60 * 24 * 365.25));
     let diasJ = Math.floor((diffJ / (1000 * 60 * 60 * 24)) % 365.25);
@@ -151,19 +151,19 @@ function showCountdown() {
     let minsJ = Math.floor((diffJ / (1000 * 60)) % 60);
     let segsJ = Math.floor((diffJ / 1000) % 60);
 
-    // RENDERIZADO FINAL LIMPIO
-    container.innerHTML =
-      `Llevamos Juntos: <b>${diasTotales}</b> días<br>` +
-      `Una Vida Juntos: <b>${aniosA}a ${diasA}d ${horasA}h ${minsA}m ${segsA}s</b><br>` +
-      `Nuestro 'Sí' formal: <b>${aniosJ}a ${diasJ}d ${horasJ}h ${minsJ}m ${segsJ}s</b>`;
+    // ESTRUCTURA FINAL (Forzamos el cambio aquí)
+    let html = "";
+    html += `Llevamos Juntos: <b>${diasTotales}</b> días<br>`;
+    html += `Una Vida Juntos: <b>${aniosA}a ${diasA}d ${horasA}h ${minsA}m ${segsA}s</b><br>`;
+    html += `Nuestro 'Sí' formal: <b>${aniosJ}a ${diasJ}d ${horasJ}h ${minsJ}m ${segsJ}s</b>`;
     
+    container.innerHTML = html;
     container.classList.add('visible');
   }
 
   update();
   setInterval(update, 1000);
 }
-
 
 // 5. Música
 function playBackgroundMusic() {
