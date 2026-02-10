@@ -124,26 +124,23 @@ function showCountdown() {
   const container = document.getElementById('countdown');
   if (!container) return;
 
-  // FECHAS CONFIGURADAS SEGÚN TU PETICIÓN
+  // Estas fechas le dicen al código que empiece a contar desde el año pasado
   const fechaRelacion = new Date('2025-03-30T00:00:00'); 
-  const fechaJunio = new Date('2025-06-20T00:00:00'); // Puesto en 2025 para que ya cuente
+  const fechaJunio = new Date('2025-06-20T00:00:00'); 
 
   function update() {
     const now = new Date();
 
-    // Lógica para "Llevamos Juntos" (Días totales)
-    let diffTotal = now - fechaRelacion;
-    let diasTotales = Math.floor(diffTotal / (1000 * 60 * 60 * 24));
-
-    // Lógica para "Una Vida Juntos" (Años, Días, Horas, Minutos, Segundos)
+    // Cálculo de diferencia para la relación
     let diffA = now - fechaRelacion;
+    let diasTotales = Math.floor(diffA / (1000 * 60 * 60 * 24));
     let aniosA = Math.floor(diffA / (1000 * 60 * 60 * 24 * 365.25));
     let diasA = Math.floor((diffA / (1000 * 60 * 60 * 24)) % 365.25);
     let horasA = Math.floor((diffA / (1000 * 60 * 60)) % 24);
     let minsA = Math.floor((diffA / (1000 * 60)) % 60);
     let segsA = Math.floor((diffA / 1000) % 60);
 
-    // Lógica para "20 de Junio" (Años, Días, Horas, Minutos, Segundos)
+    // Cálculo de diferencia para el 20 de Junio
     let diffJ = now - fechaJunio;
     let aniosJ = Math.floor(diffJ / (1000 * 60 * 60 * 24 * 365.25));
     let diasJ = Math.floor((diffJ / (1000 * 60 * 60 * 24)) % 365.25);
@@ -151,7 +148,7 @@ function showCountdown() {
     let minsJ = Math.floor((diffJ / (1000 * 60)) % 60);
     let segsJ = Math.floor((diffJ / 1000) % 60);
 
-    // RENDERIZADO (Como el inicio pero con tus datos nuevos)
+    // Esto es lo que se dibuja en tu pantalla
     container.innerHTML =
       `Llevamos Juntos: <b>${diasTotales}</b> días<br>` +
       `Una Vida Juntos: <b>${aniosA} años ${diasA} días ${horasA} horas ${minsA} minutos ${segsA} s</b><br>` +
@@ -161,7 +158,7 @@ function showCountdown() {
   }
 
   update();
-  setInterval(update, 1000);
+  setInterval(update, 1000); // Esto hace que el reloj se mueva cada segundo
 }
 
 // 5. Música
